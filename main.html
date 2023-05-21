@@ -1,0 +1,173 @@
+<html>
+    <head>
+        <title>WhatSapp</title>
+        <link rel="stylesheet" href="isityou.css">
+        <link rel="icon" href="logo-whatsapp-png-46043 (1).png">
+        <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+        <script src="index1.js"></script>
+    </head>
+    <body onload="getData()">
+      <button id="logout" onclick="logout()" class="glyphicon glyphicon-log-out btn btn-danger">Logout</button>
+      <center>
+       <div class="div">
+        <img id="userImage" name="userImage"  src="male-gde53842cd_640.png" height="150px" width="170px">
+       <div> <label class='text'>Name: </label>
+        <label id="abc" name="abc" type="text" name="text" placeholder=""></label><br>
+      </div>
+      </div>
+      <div class="s">
+        <label id="sp">Enter The Username Of Friend To Chat With Him/Her: </label>
+        <label id="error"></label>
+        <div><input id="sr" name="sr" placeholder="Username" type="text">
+        <image id="sre" name="sre" src="search-26245.png" height="50px" width="70px">
+          <div id="info" class="container1">
+            <div>
+              <img id="avatar" src="male-gde53842cd_640.png">
+            </div>
+            <div >
+              <h1 id="hghg"></h1>
+              <h2 id="shfc"></h2>
+            </div>
+          </div><br><br>
+          <label id="error" class="btn btn-danger">NOTE: THIS IS ALL THE RENTLY SEARCH THAT MAY HELP YOU.</label><br><br>
+          <div id="gg" class="container">
+            <div class="text">
+              <p id='emailofother'></p>
+              <p id='emailofother'></p>
+              
+            </div>
+      
+            
+     
+        </div>
+        </div>
+       
+      </div>
+
+        
+    </body>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  import {  getDatabase, ref as Ref, set, onValue  } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+  import { getStorage, ref as REF, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js";
+  import { getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+  
+
+ 
+  
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+  apiKey: "AIzaSyC8wgPUMiaAb3ZyiHU1ds1AopTReQJl7Oo",
+  authDomain: "registration-91aca.firebaseapp.com",
+  databaseURL: "https://registration-91aca-default-rtdb.firebaseio.com",
+  projectId: "registration-91aca",
+  storageBucket: "registration-91aca.appspot.com",
+  messagingSenderId: "179474768603",
+  appId: "1:179474768603:web:ae470a22b1e14eb06262fe"
+};
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const clouddb = getFirestore();
+
+var myuser = document.getElementById('abc').value;
+ 
+  console.log(myuser);
+ var username = localStorage.getItem('sgdyenj');
+ const starCountRef = Ref(database, 'users/' + username);
+onValue(starCountRef, (snapshot) =>{
+  const data = snapshot.val();
+ document.getElementById('abc').innerHTML = data.username;
+
+});
+ 
+  var ref = doc(clouddb,"ImageLinks/" + username);
+
+  const docSnap = await getDoc(ref);
+  if(docSnap.exists()){
+ userImage.src = docSnap.data().ImageURL;
+  }
+  var get_usernames = document.getElementById('sr').value;
+
+  var ubsd = localStorage.getItem('Room_Names');
+ console.log(ubsd);
+  const starCountRef1 = Ref(database, 'users/' + ubsd);
+onValue(starCountRef1, (snapshot) =>{
+  const data = snapshot.val();
+  var emaildd = data.email;
+  console.log(emaildd);
+  localStorage.setItem('email',data.email);
+});
+
+
+
+
+
+ sre.addEventListener('click',(e)=>{
+  
+  document.getElementById('sr').innerHTML = '';
+  var get_username = document.getElementById('sr').value;
+  console.log(get_username);
+
+
+  const starCountRef = Ref(database, 'users/' + get_username);
+onValue(starCountRef, (snapshot) =>{
+  const data = snapshot.val();
+ if (get_username = data.username){
+alert('FOUND');
+var get_username2 = data.username;
+ var get_email = data.email;
+ async function getImage(){
+  var place = document.getElementById('avatar');
+  var ref1 = doc(clouddb,"ImageLinks/" + get_username2);
+
+const docSnap = await getDoc(ref1);
+if(docSnap.exists()){
+place.src = docSnap.data().ImageURL;
+}
+}
+getImage();
+ set(Ref(database, 'Searched/' + username + '/' + get_username), {
+    username: get_username,
+
+
+  }).then(() => {
+  alert('READY TO SAVE!!');
+
+})
+.catch((error) => {
+  alert(error);
+});
+
+
+ document.getElementById('hghg').innerHTML = get_username2;
+ document.getElementById('shfc').innerHTML = get_email;
+ document.getElementById('info').style.display = 'block';
+
+
+ }else{
+ alert('USER IS NOT IN OUR DATA. CHECK IT AND TRY AGAIN.');
+ }
+
+});
+
+
+
+
+
+
+
+});
+ info.addEventListener('click' , (e)=>{
+window.location = 'chat.html';
+ });
+
+  </script>
+</html>

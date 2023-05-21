@@ -1,0 +1,214 @@
+
+<html>
+    <head>
+        <title>WhatSapp</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Free Web tutorials">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="John Doe">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="icon" href="logo-whatsapp-png-46043 (1).png">
+        <link rel="stylesheet" href="regestration.css">
+        <script type="module" src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js"></script>
+        <script type="module" src="https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js"></script>
+        <script src="index.js">
+          
+        </script>
+       
+      </head>
+        <body>
+            <section>
+              <div class="container">
+                <div class="user signinBx">
+                  <div class="imgBx"><img src="Earth.jpg" alt="" /></div>
+                  <div class="formBx">
+                    <form action="" onsubmit="return false;">
+                      <h2>Sign In</h2>
+                      <input id="username1" type="text" name="username1" required placeholder="Username" />
+                      <input id="email1" name="email" type="email1" required placeholder="Email" />
+                      <input id="password10" type="password" name="password10" required placeholder="Password" />
+                      <input id="signup_submit1" type="submit" required name="signup_submit1" value="Login" />
+                      
+                      <p class="signup">
+                        Don't have an account ?
+                        <a href="#" onclick="toggleForm()">Sign Up.</a>
+                      </p>
+                    </form>
+                  </div>
+                </div>
+                <div class="user signupBx">
+                  <div class="formBx">
+                    <form action="" onsubmit="return false;">
+                      <h2>Create an account</h2>
+                      <input id="image" name="image" class="file-upload-input" type="file" accept="Image"/>
+                      <input id="username" type="text" name="username" required placeholder="Username" />
+                      <input id="email" type="email" required name="email" placeholder="Email Address" />
+                      <input id="password" type="text" required name="password" placeholder="Create Password" />
+                      <input id="password1" required type="password" name="password1" placeholder="Confirm Password" />
+                      <input id="signup_submit" type="submit" name="signup_submit" value="Sign Up" />
+                      <p class="signup">
+                        Already have an account ?
+                        <a onclick="toggleForm()">Sign in.</a>
+                      </p>
+                    </form>
+                  </div>
+                  <div class="imgBx"><img src="Earth.jpg" alt="" /></div>
+                </div>
+              </div>
+            </section>
+          </body>
+    
+
+<script type="module">
+
+ 
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+  import {  getDatabase, ref, set, onValue  } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+  import { getStorage, ref as REF, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js";
+  import { getFirestore, doc, getDoc, setDoc, collection, addDoc} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
+  
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+  apiKey: "AIzaSyC8wgPUMiaAb3ZyiHU1ds1AopTReQJl7Oo",
+  authDomain: "registration-91aca.firebaseapp.com",
+  databaseURL: "https://registration-91aca-default-rtdb.firebaseio.com",
+  projectId: "registration-91aca",
+  storageBucket: "registration-91aca.appspot.com",
+  messagingSenderId: "179474768603",
+  appId: "1:179474768603:web:ae470a22b1e14eb06262fe"
+};
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const clouddb = getFirestore();
+
+  var files = [];
+  var reader = new FileReader();
+
+  document.getElementById('image').onchange = e =>{
+     files = e.target.files;
+
+     var ext = GetFileExt(files[0]);
+     var name = GetFileName(files[0]);
+     localStorage.setItem('ext',ext);
+     localStorage.setItem('name',name)
+     console.log(localStorage.getItem('name') + localStorage.getItem('ext'));
+     reader.readAsDataURL(files[0]);
+  }
+
+  function GetFileExt(file){
+   var temp = file.name.split(".");
+   var ext = temp.slice(temp.lenght-1,temp.lenght);
+   return '.' + ext[1];
+  }
+
+  function GetFileName(file){
+    var temp = file.name.split('.');
+    var fname = temp.slice(0,-1).join('.');
+    return fname;
+  }
+
+  signup_submit.addEventListener('click',(e)=>{
+ 
+var email = document.getElementById('email').value;
+var username = document.getElementById('username').value;
+var password = document.getElementById('password').value;
+var password1 = document.getElementById('password1').value;
+
+if(document.getElementById('password').innerHTML == document.getElementById('password1').innerHTML){
+    set(ref(database, 'users/' + username), {
+    username: username,
+    email: email,
+    password : password,
+
+  }).then(() => {
+  alert('SUCCESFULL!! GO TO SIGN IN AND SIGN IN');
+
+})
+.catch((error) => {
+  alert(error);
+});
+}else{
+  alert('YOUR TWO PASSWORD DIDNT MATCH');
+}
+
+var ImgToUpload = files[0];
+var ImgName = localStorage.getItem('name') + localStorage.getItem('ext');
+const storage = getStorage();
+
+console.log(image);
+const storageRef = REF(storage, 'Images/'+ImgName);
+
+const uploadTask = uploadBytesResumable(storageRef, ImgToUpload);
+uploadTask.on('state_changed', 
+  (snapshot) => {
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case 'paused':
+        alert('Something Error Happened');
+        break;
+      case 'running':
+      alert('Upload is running');
+        break;
+    }
+  }, 
+  (error) => {
+    alert(error);
+  }, 
+  () => {
+    alert('Image Upload');
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      console.log('File available at', downloadURL);
+      saveURL(downloadURL);
+      var imglink = downloadURL;
+    
+
+      async function saveURL(url){
+        var ref = doc(clouddb,"ImageLinks/" + username)
+
+        await setDoc(ref,{
+          ImageName : ImgName,
+          ImageURL : url
+        });
+      }
+
+    });
+  }
+);
+
+
+});
+
+signup_submit1.addEventListener('click',(e)=>{
+const starCountRef = ref(database, 'users/' + document.getElementById('username1').value);
+onValue(starCountRef, (snapshot) =>{
+  const data = snapshot.val();
+ var get_email = data.email;
+ var get_password = data.password;
+ var get_username = data.username;
+ console.log(get_email + get_password + get_username);
+ if (get_email == document.getElementById('email1').value){
+  alert('EMAIL SUCCESFULL');
+  if(get_password == document.getElementById('password10').value){
+  alert('PASSWORD SUCCESFULL DONE');
+  localStorage.setItem('sgdyenj',document.getElementById('username1').value);
+  window.location = 'main.html';
+   }
+}else{
+  alert('INVALID EMAIL USERNAME AND PASSWORD CHECK AND TRY AGAIN.');
+}
+});
+
+
+
+});
+
+
+</script>

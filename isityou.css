@@ -1,0 +1,102 @@
+body{
+    background-color: #f8dd30;
+    text-align: center;
+}
+#userImage{
+    border-radius: 50%;
+    margin-bottom: 25px;
+
+}
+#login_button{
+	width: 80%;border-radius: 15px;
+}
+
+.room_name
+{
+	cursor: pointer;
+	font-size: 20px;
+}
+
+
+#logout
+{
+	font-size: 20px; float: right;
+    font-size: 40px;
+    background-color: red;
+    
+}
+.text{
+    font-size: 40px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-right: 20px;
+    color:white;
+}
+#abc{
+    font-size: 35px;
+    border-radius: 15px;
+    text-align: center;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    width: 500px;
+}
+.div{
+    text-align: center;
+    height:auto;
+    width:100%;
+    background-color: red;
+    margin-bottom: 30px;
+}
+#sp{
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 20px;
+}
+#sr{
+    font-size: 25px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-top: 20px;
+    width:450px;
+    text-align: center;
+}
+#sre{
+    margin-left: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+.s{
+    margin-bottom: 25px;
+}
+#info{
+    text-align: center;
+    margin-top: 30px;
+    display: none;
+}
+#avatar{
+    border-radius: 50%;
+    width:220px;
+    height:200px;
+    text-align: center;
+}
+.container {
+    
+    align-items: center; 
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 5px;
+    background-color: lightpink;
+    
+   }
+   
+#av{
+    border-radius: 50%;
+    height: 180px;
+    width: 200px;
+   }
+#emailofother {
+    font-size: 25px;
+    color: black;
+    background-color: red;
+}
+#error{
+    color: red;
+    font-size: 20px;
+}
+
